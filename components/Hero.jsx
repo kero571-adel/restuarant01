@@ -85,28 +85,22 @@ export default function Hero() {
         muted
         loop
         playsInline
-        className="hidden md:block absolute inset-0 w-full h-full object-cover"
-      >
-        <source
-          src="/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4"
-          type="video/mp4"
-        />
-      </video>
-
-      {/* Mobile Video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="block md:hidden absolute inset-0 w-full h-full object-cover"
+        preload="metadata"
+        poster="/menu/Buffalo_chicken_burger_with_sauce_011a251f9a.jpeg"
+        disablePictureInPicture
+        className="absolute inset-0 w-full h-full object-cover"
       >
         <source
           src="/hero/Fried_chicken_burger_being_prepared_a8304639e8.mp4"
           type="video/mp4"
+          media="(max-width: 768px)"
+        />
+        <source
+          src="/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4"
+          type="video/mp4"
+          media="(min-width: 769px)"
         />
       </video>
-
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
 
