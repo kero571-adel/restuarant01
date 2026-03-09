@@ -67,7 +67,7 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-screen md:h-screen overflow-hidden bg-black flex items-center justify-center px-4">
       {/* Background Image with Parallax and Blur */}
-      <div
+      {/* <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-300"
         style={{
           backgroundImage:
@@ -77,9 +77,40 @@ export default function Hero() {
         }}
       >
         <div className="absolute inset-0 bg-black/60 md:bg-black/60" />
-      </div>
+      </div> */}
+      {/* Background Video */}
+      {/* Desktop Video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="hidden md:block absolute inset-0 w-full h-full object-cover"
+      >
+        <source
+          src="/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4"
+          type="video/mp4"
+        />
+      </video>
 
-      {/* Animated Food Item - Left (Burger) */}
+      {/* Mobile Video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="block md:hidden absolute inset-0 w-full h-full object-cover"
+      >
+        <source
+          src="/hero/Fried_chicken_burger_being_prepared_a8304639e8.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
+
+      {/* Animated Food Item - Left (Burger) 
       <motion.div
         className="absolute left-2 sm:left-4 md:left-8 lg:left-12 top-1/4 sm:top-1/3 z-20 hidden sm:block"
         variants={foodLeftVariants}
@@ -93,9 +124,9 @@ export default function Hero() {
         >
           🍔
         </motion.div>
-      </motion.div>
+      </motion.div>*/}
 
-      {/* Animated Food Item - Right (Wrap/Fajita) */}
+      {/* Animated Food Item - Right (Wrap/Fajita) 
       <motion.div
         className="absolute right-2 sm:right-4 md:right-8 lg:right-12 top-1/3 sm:top-2/5 z-20 hidden sm:block"
         variants={foodRightVariants}
@@ -114,7 +145,7 @@ export default function Hero() {
         >
           🌯
         </motion.div>
-      </motion.div>
+      </motion.div>*/}
 
       {/* Content - Fades in after foods settle */}
       <motion.div
