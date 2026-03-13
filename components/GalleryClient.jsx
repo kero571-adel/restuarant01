@@ -1,16 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { GallerySkeletonGrid } from "@/components/SkeletonLoader";
 
 export default function GalleryClient() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState("food");
   const [scrollY, setScrollY] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setSelectedImage(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const galleryImages = {
@@ -126,6 +147,26 @@ export default function GalleryClient() {
 
   const images = galleryImages[activeTab] || galleryImages.food;
 
+  const handleImageLoad = (imageId) => {
+    setImagesLoaded((prev) => ({
+      ...prev,
+      [imageId]: true,
+    }));
+  };
+
+  if (!mounted) {
+    return (
+      <div className="bg-white">
+        <section className="relative w-full h-80 md:h-96 overflow-hidden bg-gray-300 flex items-center justify-center">
+          <div className="animate-pulse text-gray-600">Loading gallery...</div>
+        </section>
+        <section className="py-12 md:py-20 px-4 md:px-8 max-w-7xl mx-auto w-full">
+          <GallerySkeletonGrid count={6} />
+        </section>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -135,7 +176,8 @@ export default function GalleryClient() {
           style={{
             backgroundImage:
               "url(https://images.unsplash.com/photo-1626082927389-6cd097cdc46e?w=1600&h=900&fit=crop)",
-            transform: `translateY(${scrollY * 0.4}px)`,
+            transform: `translateY(${isMobile ? 0 : scrollY * 0.4}px)`,
+            backgroundAttachment: isMobile ? "scroll" : "fixed",
           }}
         >
           <div className="absolute inset-0 bg-black/70" />
@@ -174,11 +216,11 @@ export default function GalleryClient() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-6 md:px-8 py-3 rounded-lg font-bold text-lg transition-all duration-300 transform hover:scale-105 ${
+                className={`px-6 md:px-8 py-3 rounded-lg font-bold text-lg transition-all duration-300 transform ${
                   activeTab === tab.id
                     ? "bg-red-600 text-white shadow-lg"
                     : "bg-gray-200 text-black hover:bg-gray-300"
-                }`}
+                } ${isMobile ? "" : "hover:scale-105"}`}
               >
                 {tab.label}
               </button>
@@ -201,11 +243,24 @@ export default function GalleryClient() {
               }}
             >
               <div className="relative w-full h-full overflow-hidden bg-gray-300">
+                {/* Image skeleton while loading */}
+                {!imagesLoaded[image.id] && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
+                )}
+
                 <img
                   src={image.url}
                   alt={image.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+                  className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out ${
+                    imagesLoaded[image.id] ? "fade-in" : "opacity-0"
+                  }`}
                   loading="lazy"
+                  onLoad={() => handleImageLoad(image.id)}
+                  onError={(e) => {
+                    e.target.src =
+                      "https://via.placeholder.com/300?text=Gallery+Image";
+                    handleImageLoad(image.id);
+                  }}
                 />
 
                 {/* Overlay */}
@@ -284,6 +339,7 @@ export default function GalleryClient() {
               src={selectedImage.url}
               alt={selectedImage.title}
               className="w-full h-auto rounded-lg shadow-2xl"
+              loading="lazy"
             />
 
             {/* Image Info */}

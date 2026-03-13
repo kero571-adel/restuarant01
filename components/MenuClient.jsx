@@ -1,17 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import FoodCard from "@/components/FoodCard";
 import ImagePreviewModal from "@/components/ImagePreviewModal";
 import { useImagePreview } from "@/hooks/useImagePreview";
 import { menuData } from "@/data/menu";
 import { motion } from "framer-motion";
+import { CardSkeletonGrid } from "@/components/SkeletonLoader";
 
 export default function MenuClient() {
   const [activeCategory, setActiveCategory] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { isOpen, selectedImage, openPreview, closePreview } =
     useImagePreview();
+
+  useEffect(() => {
+    setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const currentCategory = menuData[activeCategory];
 
@@ -20,7 +31,7 @@ export default function MenuClient() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: isMobile ? 0.05 : 0.1,
         delayChildren: 0.2,
       },
     },
@@ -34,6 +45,26 @@ export default function MenuClient() {
       transition: { duration: 0.5 },
     },
   };
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="bg-gradient-to-r from-red-600 to-red-500 text-white py-8 md:py-12 px-4 md:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="h-12 bg-red-500 rounded w-1/2 animate-pulse" />
+            <div className="h-6 bg-red-500 rounded w-1/3 mt-2 animate-pulse" />
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
+          <div className="mb-8 md:mb-12">
+            <div className="h-10 bg-gray-200 rounded w-1/3 animate-pulse mb-4" />
+            <div className="h-6 bg-gray-200 rounded w-2/3 animate-pulse" />
+          </div>
+          <CardSkeletonGrid count={6} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -55,7 +86,7 @@ export default function MenuClient() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        {/* Sticky Category Filter */}
+        {/* Sticky Category Filter - Reduced blur on mobile */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -66,7 +97,7 @@ export default function MenuClient() {
               <motion.button
                 key={category.id}
                 onClick={() => setActiveCategory(index)}
-                whileHover={{ scale: 1.05 }}
+                whileHover={isMobile ? {} : { scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className={`px-4 md:px-6 py-2 md:py-3 rounded-full font-bold text-xs sm:text-sm md:text-base whitespace-nowrap transition-all duration-300 transform flex-shrink-0 ${
                   activeCategory === index
@@ -135,7 +166,7 @@ export default function MenuClient() {
           </p>
           <Link href="/cart">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={isMobile ? {} : { scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-gradient-to-r from-red-600 to-red-500 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-sm md:text-lg hover:shadow-lg transition-all duration-300 shadow-lg"
             >

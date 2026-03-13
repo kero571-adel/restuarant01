@@ -94,7 +94,7 @@ export default function AboutClient() {
   ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white overflow-hidden">
       {/* Hero Banner */}
       <section className="relative w-full h-64 sm:h-80 md:h-96 lg:h-screen overflow-hidden bg-black flex items-center justify-center">
         <div
@@ -176,7 +176,7 @@ export default function AboutClient() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-8 md:py-16 lg:py-24 px-4 md:px-8 bg-gray-50">
+      <section className="py-8 md:py-16 lg:py-24 px-4 md:px-8 bg-gray-50 ">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-2 md:mb-4 text-black">
             Our <span className="text-red-600">Mission</span>

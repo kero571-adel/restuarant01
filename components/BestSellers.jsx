@@ -2,14 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
+import { CardSkeletonGrid } from "@/components/SkeletonLoader";
 
 export default function BestSellers() {
   const { addToCart } = useCart();
   const [justAdded, setJustAdded] = useState({});
   const [mounted, setMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const bestSellers = [
@@ -51,7 +58,6 @@ export default function BestSellers() {
   ];
 
   const handleAddToCart = (item) => {
-    // Add item to global cart
     addToCart({
       id: item.id,
       name: item.name,
@@ -59,7 +65,6 @@ export default function BestSellers() {
       image: item.image,
     });
 
-    // Show feedback animation for 2 seconds
     setJustAdded((prev) => ({
       ...prev,
       [item.id]: true,
@@ -73,6 +78,27 @@ export default function BestSellers() {
       });
     }, 2000);
   };
+
+  const handleImageLoad = (itemId) => {
+    setImagesLoaded((prev) => ({
+      ...prev,
+      [itemId]: true,
+    }));
+  };
+
+  if (!mounted) {
+    return (
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="h-12 bg-gray-200 rounded w-3/4 mx-auto mb-4 animate-pulse" />
+            <div className="h-6 bg-gray-200 rounded w-1/2 mx-auto animate-pulse" />
+          </div>
+          <CardSkeletonGrid count={4} />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 px-4 bg-white">
@@ -103,11 +129,23 @@ export default function BestSellers() {
               <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full flex flex-col">
                 {/* Image Container */}
                 <div className="relative h-56 overflow-hidden bg-gray-200">
+                  {/* Skeleton while loading */}
+                  {!imagesLoaded[item.id] && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
+                  )}
                   <img
                     src={item.image}
                     alt={`${item.name} - ${item.description}`}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ${
+                      imagesLoaded[item.id] ? "fade-in" : "opacity-0"
+                    }`}
+                    onLoad={() => handleImageLoad(item.id)}
+                    onError={(e) => {
+                      e.target.src =
+                        "https://via.placeholder.com/300?text=Food+Image";
+                      handleImageLoad(item.id);
+                    }}
                   />
                   {/* Tag Badge */}
                   <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">
@@ -136,8 +174,8 @@ export default function BestSellers() {
                       className={`px-4 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform ${
                         justAdded[item.id]
                           ? "bg-green-500 text-white scale-105"
-                          : "bg-red-600 text-white hover:bg-red-700 hover:scale-105 active:scale-95"
-                      }`}
+                          : "bg-red-600 text-white hover:bg-red-700 active:scale-95"
+                      } ${isMobile ? "" : "hover:scale-105"}`}
                       aria-label={`Add ${item.name} to cart`}
                     >
                       {justAdded[item.id] ? "✓ Added" : "Add"}
