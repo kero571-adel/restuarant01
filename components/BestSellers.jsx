@@ -117,14 +117,13 @@ export default function BestSellers() {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {bestSellers.map((item, index) => (
-            <div
-              key={item.id}
-              className="group h-full"
-              style={{
-                animation: `slideIn 0.6s ease-out ${index * 0.15}s forwards`,
-                opacity: 0,
-              }}
-            >
+           <div
+           key={item.id}
+           className="group h-full card-animate"
+           style={{
+             animation: `slideIn 0.6s ease-out ${index * 0.15}s forwards`,
+           }}
+         >
               {/* Card Container */}
               <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full flex flex-col">
                 {/* Image Container */}

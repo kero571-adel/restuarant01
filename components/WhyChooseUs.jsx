@@ -43,10 +43,9 @@ export default function WhyChooseUs() {
           {features.map((feature, index) => (
             <div
               key={feature.id}
-              className="group"
+              className="group h-full card-animate"
               style={{
-                animation: `slideUp 0.6s ease-out ${index * 0.2}s forwards`,
-                opacity: 0,
+                animation: `slideIn 0.6s ease-out ${index * 0.15}s forwards`,
               }}
             >
               {/* Feature Card */}

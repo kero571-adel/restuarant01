@@ -1,5 +1,65 @@
 "use client";
 
+// Circular loader spinner - Main version
+export function CircularLoader() {
+  return (
+    <div className="flex items-center justify-center">
+      <div className="relative w-16 h-16">
+        {/* Outer rotating circle */}
+        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-red-600 border-r-red-600 animate-spin"></div>
+
+        {/* Middle pulsing circle */}
+        <div className="absolute inset-2 rounded-full border-3 border-transparent border-b-red-400 animate-spin-slow"></div>
+
+        {/* Inner circle - static */}
+        <div className="absolute inset-4 rounded-full border-2 border-red-200 flex items-center justify-center">
+          <div className="text-red-600 font-bold text-xs">⏳</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Small circular loader spinner - for images
+export function SmallCircularLoader() {
+  return (
+    <div className="flex items-center justify-center">
+      <div className="relative w-10 h-10">
+        <div className="absolute inset-0 rounded-full border-3 border-transparent border-t-red-600 border-r-red-600 animate-spin"></div>
+        <div className="absolute inset-1 rounded-full border-2 border-red-200"></div>
+      </div>
+    </div>
+  );
+}
+
+// Image with loading spinner
+export function ImageWithLoader({ src, alt, className = "", onLoadComplete }) {
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
+    if (onLoadComplete) onLoadComplete();
+  };
+
+  return (
+    <div className={`relative ${className}`}>
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
+          <CircularLoader />
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        onLoad={handleImageLoad}
+        className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+      />
+    </div>
+  );
+}
+
 // Shimmer skeleton loader component
 export function SkeletonLoader({ width = "w-full", height = "h-12" }) {
   return (
@@ -26,7 +86,6 @@ export function CardSkeleton() {
       <div className="w-full h-56 bg-gray-200 animate-pulse">
         <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
       </div>
-
       {/* Content placeholder */}
       <div className="p-4 md:p-5">
         {/* Title */}
