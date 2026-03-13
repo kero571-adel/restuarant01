@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { GallerySkeletonGrid } from "@/components/SkeletonLoader";
+import {
+  GallerySkeletonGrid,
+  SmallCircularLoader,
+} from "@/components/SkeletonLoader";
 
 export default function GalleryClient() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -245,7 +248,9 @@ export default function GalleryClient() {
               <div className="relative w-full h-full overflow-hidden bg-gray-300">
                 {/* Image skeleton while loading */}
                 {!imagesLoaded[image.id] && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-200/80 backdrop-blur-sm z-10">
+                    <SmallCircularLoader />
+                  </div>
                 )}
 
                 <img

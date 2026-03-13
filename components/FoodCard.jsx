@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { motion } from "framer-motion";
+import { SmallCircularLoader } from "@/components/SkeletonLoader";
 
 export default function FoodCard({ item, onImageClick }) {
   const { addToCart } = useCart();
@@ -48,9 +49,11 @@ export default function FoodCard({ item, onImageClick }) {
           className="relative h-48 sm:h-56 bg-gray-200 cursor-pointer"
           onClick={handleImageClick}
         >
-          {/* Image skeleton while loading */}
+          {/* Loading Spinner */}
           {!imageLoaded && (
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-200/80 backdrop-blur-sm z-10">
+              <SmallCircularLoader />
+            </div>
           )}
 
           <img
