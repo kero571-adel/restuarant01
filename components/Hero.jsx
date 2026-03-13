@@ -6,14 +6,33 @@ import Link from "next/link";
 
 export default function Hero() {
   const [scrollY, setScrollY] = useState(0);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Detect mobile
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
-  // Animation sequence: foods appear and rotate, then content fades in
+  // Load video after 2 seconds to prevent blocking initial render
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setVideoLoaded(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Reduce animations on mobile
   const foodLeftVariants = {
     hidden: { x: -400, rotate: -180, opacity: 0 },
     visible: {
@@ -21,7 +40,7 @@ export default function Hero() {
       rotate: 360,
       opacity: 1,
       transition: {
-        duration: 1.4,
+        duration: isMobile ? 0.8 : 1.4,
         ease: "easeOut",
         type: "spring",
         stiffness: 50,
@@ -36,7 +55,7 @@ export default function Hero() {
       rotate: -360,
       opacity: 1,
       transition: {
-        duration: 1.4,
+        duration: isMobile ? 0.8 : 1.4,
         ease: "easeOut",
         type: "spring",
         stiffness: 50,
@@ -49,7 +68,7 @@ export default function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        delay: 1.2,
+        delay: isMobile ? 0.4 : 1.2,
         duration: 0.8,
       },
     },
@@ -66,82 +85,44 @@ export default function Hero() {
 
   return (
     <section className="relative w-full min-h-screen md:h-screen overflow-hidden bg-black flex items-center justify-center px-4">
-      {/* Background Image with Parallax and Blur */}
-      {/* <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-300"
+      {/* Poster Image - Shows immediately */}
+      <div
+        className="absolute inset-0 w-full h-full object-cover"
         style={{
           backgroundImage:
-            "url(https://images.unsplash.com/photo-1626082927389-6cd097cdc46e?w=1600&h=900&fit=crop)",
-          transform: `translateY(${scrollY * 0.5}px)`,
-          filter: "blur(4px)",
+            "url(/menu/Buffalo_chicken_burger_with_sauce_011a251f9a.jpeg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: isMobile ? "scroll" : "fixed",
         }}
       >
-        <div className="absolute inset-0 bg-black/60 md:bg-black/60" />
-      </div> */}
-      {/* Background Video */}
-      {/* Desktop Video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/menu/Buffalo_chicken_burger_with_sauce_011a251f9a.jpeg"
-        disablePictureInPicture
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source
-          src="/hero/Fried_chicken_burger_being_prepared_a8304639e8.mp4"
-          type="video/mp4"
-          media="(max-width: 768px)"
-        />
-        <source
-          src="/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4"
-          type="video/mp4"
-          media="(min-width: 769px)"
-        />
-      </video>
+        <div className="absolute inset-0 bg-black/60"></div>
+      </div>
+
+      {/* Background Video - Lazy loaded */}
+      {videoLoaded && (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          className="absolute inset-0 w-full h-full object-cover fade-in-video"
+        >
+          <source
+            src={
+              isMobile
+                ? "/hero/Fried_chicken_burger_being_prepared_a8304639e8.mp4"
+                : "/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4"
+            }
+            type="video/mp4"
+          />
+        </video>
+      )}
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
-
-      {/* Animated Food Item - Left (Burger) 
-      <motion.div
-        className="absolute left-2 sm:left-4 md:left-8 lg:left-12 top-1/4 sm:top-1/3 z-20 hidden sm:block"
-        variants={foodLeftVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-2xl filter brightness-110"
-        >
-          🍔
-        </motion.div>
-      </motion.div>*/}
-
-      {/* Animated Food Item - Right (Wrap/Fajita) 
-      <motion.div
-        className="absolute right-2 sm:right-4 md:right-8 lg:right-12 top-1/3 sm:top-2/5 z-20 hidden sm:block"
-        variants={foodRightVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div
-          animate={{ y: [0, 15, 0] }}
-          transition={{
-            duration: 3.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 0.3,
-          }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-2xl filter brightness-110"
-        >
-          🌯
-        </motion.div>
-      </motion.div>*/}
-
-      {/* Content - Fades in after foods settle */}
+      {/* Content - Fades in faster on mobile */}
       <motion.div
         className="relative z-10 text-center text-white max-w-4xl mx-auto"
         variants={contentVariants}
@@ -155,7 +136,6 @@ export default function Hero() {
         >
           🔥 Premium Quality Fried Chicken
         </motion.div>
-
         {/* Title */}
         <motion.h1
           variants={itemVariants}
@@ -183,7 +163,7 @@ export default function Hero() {
         >
           <Link href="/menu">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={isMobile ? {} : { scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-red-600 text-white font-bold text-sm sm:text-lg rounded-lg hover:bg-red-700 transition-all duration-300 shadow-lg"
             >
@@ -192,7 +172,7 @@ export default function Hero() {
           </Link>
           <Link href="/menu">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={isMobile ? {} : { scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white text-black font-bold text-sm sm:text-lg rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-lg"
             >
@@ -201,6 +181,21 @@ export default function Hero() {
           </Link>
         </motion.div>
       </motion.div>
+
+      <style jsx>{`
+        @keyframes fadeInVideo {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        :global(.fade-in-video) {
+          animation: fadeInVideo 1s ease-in-out forwards;
+        }
+      `}</style>
     </section>
   );
 }

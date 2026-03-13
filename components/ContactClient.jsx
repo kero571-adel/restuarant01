@@ -351,7 +351,15 @@ export default function ContactClient() {
                   Located in the heart of the city, easily accessible by car or
                   public transportation.
                 </p>
-                <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 md:py-3 rounded-lg transition-all duration-300 transform hover:scale-105 text-xs md:text-base">
+                <button
+                  onClick={() => {
+                    window.open(
+                      "https://www.google.com/maps/search/123+Crunch+Street,+Food+City,+FC+12345",
+                      "_blank"
+                    );
+                  }}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 md:py-3 rounded-lg transition-all duration-300 transform hover:scale-105 text-xs md:text-base"
+                >
                   Get Directions
                 </button>
               </div>

@@ -221,13 +221,13 @@ export default function OffersClient() {
 
                     {/* Badge */}
                     <div
-                      className={`absolute top-2 md:top-4 right-2 md:right-4 ${offer.color} text-white px-2 md:px-4 py-1 md:py-2 rounded-full font-bold text-xs md:text-sm shadow-lg`}
+                      className={`absolute top-2 md:top-3 right-2 md:right-3 ${offer.color} text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full font-bold text-xs md:text-xs lg:text-sm shadow-lg`}
                     >
                       {offer.badge}
                     </div>
 
                     {/* Discount Badge */}
-                    <div className="absolute top-2 md:top-4 left-2 md:left-4 bg-red-600 text-white px-2 md:px-4 py-1 md:py-2 rounded-full font-black text-xs md:text-lg shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                    <div className="absolute top-2 md:top-3 left-2 md:left-3 bg-red-600 text-white px-2 md:px-3 py-0.5 md:py-1 rounded-full font-black text-xs md:text-xs lg:text-sm shadow-lg transform group-hover:scale-110 transition-transform duration-300">
                       {offer.discount}
                     </div>
 

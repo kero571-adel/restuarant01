@@ -32,22 +32,39 @@ export const metadata = {
       "https://images.unsplash.com/photo-1626082927389-6cd097cdc46e?w=1200&h=630&fit=crop",
     ],
   },
-  viewport: "width=device-width, initial-scale=1.0",
+  viewport: "width=device-width, initial-scale=1.0, viewport-fit=cover",
   robots: "index, follow",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="canonical" href="https://crunchybite.com" />
+        {/* Performance: Preconnect to external domains */}
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        {/* Optimize font loading if using web fonts */}
+        <link
+          rel="preload"
+          as="image"
+          href="/menu/Buffalo_chicken_burger_with_sauce_011a251f9a.jpeg"
+        />
       </head>
       <body>
         <CartProvider>
           <Navbar />
-          {children}
+          <main className="pt-14 sm:pt-16">{children}</main>
           <Footer />
         </CartProvider>
       </body>

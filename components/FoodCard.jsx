@@ -8,6 +8,10 @@ export default function FoodCard({ item, onImageClick }) {
   const { addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" && window.innerWidth < 768
+  );
 
   const handleAddToCart = () => {
     addToCart(item);
@@ -44,37 +48,51 @@ export default function FoodCard({ item, onImageClick }) {
           className="relative h-48 sm:h-56 bg-gray-200 cursor-pointer"
           onClick={handleImageClick}
         >
+          {/* Image skeleton while loading */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-shimmer" />
+          )}
+
           <img
             src={item.image}
             alt={`${item.name} - ${item.description}`}
             loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className={`w-full h-full object-cover transition-transform duration-300 ${
+              imageLoaded ? "fade-in" : "opacity-0"
+            } ${isMobile ? "group-hover:scale-105" : "group-hover:scale-105"}`}
+            onLoad={() => setImageLoaded(true)}
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/300?text=Food+Image";
+              setImageLoaded(true);
+            }}
           />
-          {/* Overlay on hover */}
+          {/* Overlay on hover - reduced on mobile */}
           <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300" />
 
-          {/* Preview Icon */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ opacity: 1, scale: 1 }}
-            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <div className="bg-white/95 backdrop-blur-sm p-3 rounded-full shadow-lg">
-              <svg
-                className="w-6 h-6 text-gray-800"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7h4"
-                />
-              </svg>
-            </div>
-          </motion.div>
+          {/* Preview Icon - Hidden on mobile */}
+          {!isMobile && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileHover={{ opacity: 1, scale: 1 }}
+              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            >
+              <div className="bg-white/95 backdrop-blur-sm p-3 rounded-full shadow-lg">
+                <svg
+                  className="w-6 h-6 text-gray-800"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7h4"
+                  />
+                </svg>
+              </div>
+            </motion.div>
+          )}
 
           {/* Quick Add Badge */}
           <motion.button
@@ -82,7 +100,7 @@ export default function FoodCard({ item, onImageClick }) {
               e.stopPropagation();
               handleAddToCart();
             }}
-            whileHover={{ scale: 1.1 }}
+            whileHover={isMobile ? {} : { scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             className="absolute bottom-2 md:bottom-4 right-2 md:right-4 bg-red-600 hover:bg-red-700 text-white p-2 md:p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             aria-label={`Add ${item.name} to cart`}
@@ -122,7 +140,7 @@ export default function FoodCard({ item, onImageClick }) {
             </span>
             <motion.button
               onClick={handleAddToCart}
-              whileHover={{ scale: 1.05 }}
+              whileHover={isMobile ? {} : { scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-semibold text-xs md:text-sm transition-all duration-300 transform ${
                 isAdded
