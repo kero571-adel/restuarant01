@@ -1,40 +1,65 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 
 const VIDEO_DESKTOP = "/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4";
 const VIDEO_MOBILE = "/hero/Fried_chicken_burger_being_prepared_a8304639e8.mp4";
 
-export default function Hero() {
-  const [videoSrc, setVideoSrc] = useState(null);
+// الفيديو بيتكتب في الـ HTML نفسه (SSR)، فالمتصفح يبدأ تحميله وتشغيله
+// قبل ما الـ JS بتاع React يتحمّل. الـ script بيختار الملف حسب حجم الشاشة.
+const videoMarkup = `
+<video
+  id="hero-video"
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  disablepictureinpicture
+  aria-hidden="true"
+  class="absolute inset-0 w-full h-full object-cover"
+></video>
+<script>
+  (function () {
+    var v = document.getElementById("hero-video");
+    if (!v) return;
+    v.muted = true;
+    v.src = window.matchMedia("(max-width: 767px)").matches
+      ? "${VIDEO_MOBILE}"
+      : "${VIDEO_DESKTOP}";
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
+  })();
+</script>
+`;
 
-  // اختار الفيديو مرة واحدة بس، من غير scroll/resize listeners
+export default function Hero() {
+  // fallback: لو الـ script ماشتغلش لأي سبب، نشغّل الفيديو بعد الـ hydration
   useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    setVideoSrc(isMobile ? VIDEO_MOBILE : VIDEO_DESKTOP);
+    const v = document.getElementById("hero-video");
+    if (!v) return;
+    v.muted = true;
+    if (!v.getAttribute("src")) {
+      v.src = window.matchMedia("(max-width: 767px)").matches
+        ? VIDEO_MOBILE
+        : VIDEO_DESKTOP;
+    }
+    if (v.paused) v.play().catch(() => {});
   }, []);
 
   return (
     <section className="relative w-full min-h-[100svh] overflow-hidden bg-black flex items-center justify-center px-4">
-      {/* الفيديو بيبدأ فورًا من غير تأخير ومن غير poster */}
-      {videoSrc && (
-        <video
-          src={videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          aria-hidden="true"
-          className="hero-video absolute inset-0 w-full h-full object-cover"
-        />
-      )}
+      {/* الفيديو: من غير poster ومن غير تأخير */}
+      <div
+        className="absolute inset-0"
+        dangerouslySetInnerHTML={{ __html: videoMarkup }}
+      />
 
-      {/* Overlay واحد بس */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/60" />
 
+      {/* المحتوى */}
       <div className="relative z-10 text-center text-white max-w-4xl mx-auto">
         <div
           className="hero-item inline-block mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-3 bg-red-600 rounded-full text-xs sm:text-sm font-bold shadow-xl"
@@ -86,26 +111,14 @@ export default function Hero() {
           transform: translateY(12px);
           animation: heroIn 0.35s ease-out forwards;
         }
-        .hero-video {
-          animation: heroFade 0.4s ease-out forwards;
-        }
         @keyframes heroIn {
           to {
             opacity: 1;
             transform: translateY(0);
           }
         }
-        @keyframes heroFade {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
         @media (prefers-reduced-motion: reduce) {
-          .hero-item,
-          .hero-video {
+          .hero-item {
             animation: none;
             opacity: 1;
             transform: none;
