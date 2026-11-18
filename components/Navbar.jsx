@@ -43,14 +43,7 @@ export default function Navbar() {
             href="/"
             className="flex items-center gap-2 group flex-shrink-0"
           >
-            <motion.span
-              className="text-2xl sm:text-3xl font-black text-red-600"
-              whileHover={{ scale: 1.1, rotate: 10 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              🍗
-            </motion.span>
-            <span className="text-lg sm:text-2xl font-black text-white hidden sm:inline">
+            <span className="text-lg sm:text-2xl font-black text-white sm:inline">
               Crunchy <span className="text-red-600">Bite</span>
             </span>
           </Link>

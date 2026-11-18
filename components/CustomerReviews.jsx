@@ -1,5 +1,7 @@
 "use client";
 
+import { Star } from "lucide-react";
+
 export default function CustomerReviews() {
   const reviews = [
     {
@@ -8,7 +10,6 @@ export default function CustomerReviews() {
       rating: 5,
       comment:
         "Best fried chicken I have ever had! The coating is perfectly crispy and the meat is always juicy. Will definitely order again!",
-      avatar: "👩‍💼",
     },
     {
       id: 2,
@@ -16,7 +17,6 @@ export default function CustomerReviews() {
       rating: 5,
       comment:
         "Crunchy Bite delivers super fast and the food is always hot. Their secret recipe is no joke - this chicken is addictive!",
-      avatar: "👨‍💼",
     },
     {
       id: 3,
@@ -24,7 +24,6 @@ export default function CustomerReviews() {
       rating: 5,
       comment:
         "Family bucket is perfect for our weekly gatherings. Fresh ingredients, amazing taste, and great value for money. Highly recommended!",
-      avatar: "👩‍🦰",
     },
   ];
 
@@ -56,16 +55,26 @@ export default function CustomerReviews() {
               <div className="bg-linear-to-br from-gray-50 to-gray-100 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full flex flex-col">
                 {/* Avatar and Name */}
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="text-5xl">{review.avatar}</div>
+                  <div
+                    className="w-12 h-12 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold"
+                    aria-hidden="true"
+                  >
+                    {review.name
+                      .split(" ")
+                      .map((part) => part[0])
+                      .join("")}
+                  </div>
                   <div>
                     <h3 className="font-bold text-black text-lg">
                       {review.name}
                     </h3>
                     <div className="flex gap-1">
                       {[...Array(review.rating)].map((_, i) => (
-                        <span key={i} className="text-yellow-400 text-lg">
-                          ⭐
-                        </span>
+                        <Star
+                          key={i}
+                          className="w-4 h-4 text-yellow-400 fill-current"
+                          aria-hidden="true"
+                        />
                       ))}
                     </div>
                   </div>

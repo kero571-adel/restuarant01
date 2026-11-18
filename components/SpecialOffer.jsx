@@ -46,7 +46,7 @@ export default function SpecialOffer() {
           <div className="relative z-10 py-16 md:py-24 px-8 md:px-16 text-center text-white">
             {/* Badge */}
             <div className="inline-block mb-6 px-4 py-2 bg-yellow-400 text-black rounded-full text-sm font-bold">
-              ⏰ Limited Time Offer
+              Limited Time Offer
             </div>
 
             {/* Main Heading */}

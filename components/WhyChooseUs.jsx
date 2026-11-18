@@ -4,21 +4,18 @@ export default function WhyChooseUs() {
   const features = [
     {
       id: 1,
-      icon: "🥒",
       title: "Fresh Ingredients",
       description:
         "We source only the freshest, highest quality chicken and ingredients daily",
     },
     {
       id: 2,
-      icon: "⚡",
       title: "Fast Delivery",
       description:
         "Hot, crispy chicken delivered to your door in under 30 minutes",
     },
     {
       id: 3,
-      icon: "🔐",
       title: "Secret Recipe",
       description:
         "Our proprietary blend of 11 spices creates the perfect crispy coating",
@@ -50,11 +47,6 @@ export default function WhyChooseUs() {
             >
               {/* Feature Card */}
               <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 h-full">
-                {/* Icon */}
-                <div className="text-6xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
-                </div>
-
                 {/* Title */}
                 <h3 className="text-2xl font-bold text-black mb-3 group-hover:text-red-600 transition-colors">
                   {feature.title}

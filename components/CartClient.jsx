@@ -4,6 +4,7 @@ import { useCart } from "@/context/CartContext";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { ShoppingCart } from "lucide-react";
 
 export default function CartClient() {
   const { cart, removeFromCart, updateQuantity, getTotalPrice, clearCart } =
@@ -60,7 +61,10 @@ export default function CartClient() {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-12 md:py-16"
           >
-            <div className="text-5xl md:text-6xl mb-4">🛒</div>
+            <ShoppingCart
+              className="w-12 h-12 md:w-14 md:h-14 mx-auto mb-4 text-red-600"
+              aria-hidden="true"
+            />
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
               Cart is Empty
             </h2>

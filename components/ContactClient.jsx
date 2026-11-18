@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Clock, MapPin, Phone } from "lucide-react";
 
 export default function ContactClient() {
   const [scrollY, setScrollY] = useState(0);
@@ -76,19 +77,19 @@ export default function ContactClient() {
 
   const contactInfo = [
     {
-      icon: "📞",
+      icon: Phone,
       title: "Phone",
       value: "(555) 123-4567",
       color: "bg-red-600",
     },
     {
-      icon: "📍",
+      icon: MapPin,
       title: "Address",
       value: "123 Crunch Street, Food City, FC 12345",
       color: "bg-yellow-500",
     },
     {
-      icon: "🕐",
+      icon: Clock,
       title: "Opening Hours",
       value: "Mon-Thu: 11AM - 10PM | Fri-Sun: 11AM - 11PM",
       color: "bg-orange-600",
@@ -147,8 +148,11 @@ export default function ContactClient() {
                 <div
                   className={`${info.color} rounded-t-lg md:rounded-t-2xl p-4 md:p-6 lg:p-8 text-white transform group-hover:scale-105 transition-all duration-300`}
                 >
-                  <div className="text-3xl md:text-4xl lg:text-5xl mb-2 md:mb-4">
-                    {info.icon}
+                  <div className="mb-2 md:mb-4">
+                    <info.icon
+                      className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
+                      aria-hidden="true"
+                    />
                   </div>
                   <h3 className="text-lg md:text-xl lg:text-2xl font-black">
                     {info.title}
@@ -342,7 +346,7 @@ export default function ContactClient() {
 
               <div className="bg-gradient-to-r from-red-50 to-yellow-50 border-2 border-red-200 rounded-lg md:rounded-2xl p-3 md:p-6 lg:p-8 shadow-lg">
                 <h3 className="text-lg md:text-xl lg:text-2xl font-black text-black mb-2 md:mb-4">
-                  📍 Our Location
+                  Our Location
                 </h3>
                 <p className="text-gray-700 font-semibold mb-2 md:mb-4 text-xs md:text-base">
                   123 Crunch Street, Food City, FC 12345
@@ -399,9 +403,9 @@ export default function ContactClient() {
           >
             {[
               { icon: "f", name: "Facebook" },
-              { icon: "𝕏", name: "Twitter" },
-              { icon: "📷", name: "Instagram" },
-              { icon: "▶️", name: "YouTube" },
+              { icon: "X", name: "Twitter" },
+              { icon: "IG", name: "Instagram" },
+              { icon: "YT", name: "YouTube" },
             ].map((social, index) => (
               <button
                 key={index}

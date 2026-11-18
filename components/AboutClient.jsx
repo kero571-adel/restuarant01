@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Award, Clock, CookingPot, Heart } from "lucide-react";
 
 export default function AboutClient() {
   const [scrollY, setScrollY] = useState(0);
@@ -47,25 +48,25 @@ export default function AboutClient() {
 
   const missionPoints = [
     {
-      icon: "🥇",
+      icon: Award,
       title: "Premium Quality",
       description:
         "Only the freshest, highest-grade chicken sourced daily from trusted suppliers.",
     },
     {
-      icon: "⚡",
+      icon: Clock,
       title: "Lightning Fast",
       description:
         "Served hot and fresh within minutes of cooking, never frozen or reheated.",
     },
     {
-      icon: "🧂",
+      icon: CookingPot,
       title: "Secret Recipe",
       description:
         "Our proprietary blend of spices creates the perfect crispy, golden exterior.",
     },
     {
-      icon: "❤️",
+      icon: Heart,
       title: "Passion Driven",
       description:
         "Every piece is crafted with care and dedication to excellence.",
@@ -195,8 +196,11 @@ export default function AboutClient() {
                   opacity: 0,
                 }}
               >
-                <div className="text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
-                  {point.icon}
+                <div className="text-red-600 mb-3 md:mb-4">
+                  <point.icon
+                    className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
+                    aria-hidden="true"
+                  />
                 </div>
                 <h3 className="text-base md:text-lg lg:text-xl font-bold text-black mb-2 md:mb-3">
                   {point.title}

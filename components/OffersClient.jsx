@@ -4,6 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import {
+  BadgeCheck,
+  CalendarDays,
+  Tag,
+  Truck,
+  X,
+} from "lucide-react";
 
 export default function OffersClient() {
   const [scrollY, setScrollY] = useState(0);
@@ -32,7 +39,7 @@ export default function OffersClient() {
       validity: "Every Tuesday",
       color: "bg-gradient-to-br from-red-500 to-red-600",
       textColor: "text-red-600",
-      badge: "🔥 HOT DEAL",
+      badge: "HOT DEAL",
     },
     {
       id: 2,
@@ -46,7 +53,7 @@ export default function OffersClient() {
       validity: "Valid all week",
       color: "bg-gradient-to-br from-yellow-400 to-yellow-500",
       textColor: "text-yellow-600",
-      badge: "👨‍👩‍👧‍👦 FAMILY SPECIAL",
+      badge: "FAMILY SPECIAL",
     },
     {
       id: 3,
@@ -60,7 +67,7 @@ export default function OffersClient() {
       validity: "Weekend only (Fri-Sun)",
       color: "bg-gradient-to-br from-orange-500 to-orange-600",
       textColor: "text-orange-600",
-      badge: "🍔 BOGO SPECIAL",
+      badge: "BOGO SPECIAL",
     },
     {
       id: 4,
@@ -74,7 +81,7 @@ export default function OffersClient() {
       validity: "Saturday & Sunday",
       color: "bg-gradient-to-br from-red-600 to-pink-600",
       textColor: "text-red-600",
-      badge: "⭐ WEEKEND VIBES",
+      badge: "WEEKEND VIBES",
     },
     {
       id: 5,
@@ -88,7 +95,7 @@ export default function OffersClient() {
       validity: "11 AM - 2 PM Daily",
       color: "bg-gradient-to-br from-yellow-500 to-orange-500",
       textColor: "text-yellow-600",
-      badge: "☀️ LUNCH RUSH",
+      badge: "LUNCH RUSH",
     },
     {
       id: 6,
@@ -102,7 +109,7 @@ export default function OffersClient() {
       validity: "4 PM - 6 PM Weekdays",
       color: "bg-gradient-to-br from-red-500 to-rose-600",
       textColor: "text-red-600",
-      badge: "🌅 HAPPY HOUR",
+      badge: "HAPPY HOUR",
     },
   ];
 
@@ -158,7 +165,7 @@ export default function OffersClient() {
               animation: "fadeInUp 1s ease-out forwards",
             }}
           >
-            🎉 Exclusive Offers
+            Exclusive Offers
           </h1>
           <p
             className="text-xs sm:text-sm md:text-lg lg:text-2xl text-yellow-300 font-bold max-w-2xl mx-auto"
@@ -251,7 +258,10 @@ export default function OffersClient() {
 
                     {/* Validity */}
                     <p className="text-xs text-gray-500 mb-3 md:mb-4 flex items-center gap-2">
-                      <span>📅</span>
+                      <CalendarDays
+                        className="w-4 h-4 flex-shrink-0"
+                        aria-hidden="true"
+                      />
                       <span className="line-clamp-1">{offer.validity}</span>
                     </p>
 
@@ -285,7 +295,7 @@ export default function OffersClient() {
       <section className="py-8 md:py-12 lg:py-16 px-4 md:px-8 bg-gradient-to-r from-red-700 to-red-800 text-white">
         <div className="max-w-6xl mx-auto text-center">
           <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4">
-            ⏰ Hurry! Limited Time Offers
+            Hurry! Limited Time Offers
           </h3>
           <p className="text-xs md:text-base lg:text-lg mb-4 md:mb-6 text-red-100 px-2">
             Valid while supplies last. Cannot be combined with other offers.
@@ -313,7 +323,10 @@ export default function OffersClient() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
             <div className="text-center text-white bg-red-600 rounded-lg md:rounded-xl p-4 md:p-6 lg:p-8 transform hover:scale-105 transition-transform duration-300">
               <div className="text-3xl md:text-4xl lg:text-5xl mb-2 md:mb-4">
-                🚀
+                <Truck
+                  className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto"
+                  aria-hidden="true"
+                />
               </div>
               <h4 className="text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2">
                 Fast Delivery
@@ -324,7 +337,10 @@ export default function OffersClient() {
             </div>
             <div className="text-center text-white bg-yellow-600 rounded-lg md:rounded-xl p-4 md:p-6 lg:p-8 transform hover:scale-105 transition-transform duration-300">
               <div className="text-3xl md:text-4xl lg:text-5xl mb-2 md:mb-4">
-                💰
+                <Tag
+                  className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto"
+                  aria-hidden="true"
+                />
               </div>
               <h4 className="text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2">
                 Best Prices
@@ -335,7 +351,10 @@ export default function OffersClient() {
             </div>
             <div className="text-center text-white bg-orange-600 rounded-lg md:rounded-xl p-4 md:p-6 lg:p-8 transform hover:scale-105 transition-transform duration-300 sm:col-span-2 lg:col-span-1">
               <div className="text-3xl md:text-4xl lg:text-5xl mb-2 md:mb-4">
-                ⭐
+                <BadgeCheck
+                  className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 mx-auto"
+                  aria-hidden="true"
+                />
               </div>
               <h4 className="text-base md:text-lg lg:text-xl font-bold mb-1 md:mb-2">
                 Quality Guaranteed
@@ -376,7 +395,7 @@ export default function OffersClient() {
                 className="absolute top-2 md:top-4 right-2 md:right-4 w-8 md:w-10 h-8 md:h-10 bg-red-600 rounded-full flex items-center justify-center text-white hover:bg-red-700 transition-all duration-300 shadow-lg cursor-pointer font-bold text-lg"
                 aria-label="Close modal"
               >
-                ✕
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 

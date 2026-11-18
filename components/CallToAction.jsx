@@ -50,14 +50,14 @@ export default function CallToAction() {
             {/* Newsletter Signup */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 max-w-md mx-auto">
               <p className="text-sm mb-4">Get exclusive deals and updates</p>
-              <form onSubmit={handleSubscribe} className="flex gap-2">
+              <form onSubmit={handleSubscribe} className="flex gap-2 flex-wrap">
                 <input
                   type="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="flex-1 px-4 py-2 rounded-lg text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="flex-1 px-4 py-2 rounded-lg text-white placeholder-white-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 />
                 <button
                   type="submit"
@@ -74,18 +74,9 @@ export default function CallToAction() {
 
             {/* Trust Badges */}
             <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">🚚</span>
-                <span>Free Delivery Over $25</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">⏱️</span>
-                <span>30 Min Delivery</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">💳</span>
-                <span>All Payment Methods</span>
-              </div>
+              <span>Free Delivery Over $25</span>
+              <span>30 Min Delivery</span>
+              <span>All Payment Methods</span>
             </div>
           </div>
         </div>

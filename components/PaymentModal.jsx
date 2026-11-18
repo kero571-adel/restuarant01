@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Loader } from "lucide-react";
+import { Eye, EyeOff, X, Loader } from "lucide-react";
 
 export default function PaymentModal({
   isOpen,
@@ -433,7 +433,11 @@ export default function PaymentModal({
                             showPassword ? "Hide password" : "Show password"
                           }
                         >
-                          {showPassword ? "👁️" : "👁️‍🗨️"}
+                          {showPassword ? (
+                            <EyeOff className="w-5 h-5" aria-hidden="true" />
+                          ) : (
+                            <Eye className="w-5 h-5" aria-hidden="true" />
+                          )}
                         </motion.button>
                       </div>
                       {errors.password && (

@@ -76,7 +76,7 @@ export default function MenuClient() {
       >
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2">
-            🍗 Crunchy <span className="text-yellow-300">Bite</span>
+            Crunchy <span className="text-yellow-300">Bite</span>
           </h1>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl opacity-90">
             Crispy. Delicious. Unforgettable.

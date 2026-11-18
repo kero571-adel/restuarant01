@@ -134,7 +134,7 @@ export default function Hero() {
           variants={itemVariants}
           className="inline-block mb-4 sm:mb-6 px-4 sm:px-6 py-2 sm:py-3 bg-red-600 rounded-full text-xs sm:text-sm font-bold shadow-xl"
         >
-          🔥 Premium Quality Fried Chicken
+          Premium Quality Fried Chicken
         </motion.div>
         {/* Title */}
         <motion.h1

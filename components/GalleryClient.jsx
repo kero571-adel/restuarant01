@@ -212,9 +212,9 @@ export default function GalleryClient() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              { id: "food", label: "🍗 Food" },
-              { id: "kitchen", label: "👨‍🍳 Kitchen" },
-              { id: "interior", label: "🏠 Restaurant Interior" },
+              { id: "food", label: "Food" },
+              { id: "kitchen", label: "Kitchen" },
+              { id: "interior", label: "Restaurant Interior" },
             ].map((tab) => (
               <button
                 key={tab.id}

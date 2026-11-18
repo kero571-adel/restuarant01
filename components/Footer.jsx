@@ -1,6 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import {
+  Clock,
+  CreditCard,
+  Landmark,
+  Mail,
+  MapPin,
+  Phone,
+  Smartphone,
+} from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,7 +23,6 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl sm:text-3xl">🍗</span>
               <h3 className="text-xl sm:text-2xl font-black">
                 Crunchy <span className="text-red-600">Bite</span>
               </h3>
@@ -37,14 +45,14 @@ export default function Footer() {
                 aria-label="Instagram"
                 className="w-8 sm:w-10 h-8 sm:h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors cursor-pointer text-xs sm:text-base"
               >
-                📷
+                IG
               </a>
               <a
                 href="#twitter"
                 aria-label="Twitter"
                 className="w-8 sm:w-10 h-8 sm:h-10 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors cursor-pointer text-xs sm:text-base"
               >
-                𝕏
+                X
               </a>
             </div>
           </div>
@@ -97,19 +105,19 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 md:space-y-3 text-gray-400 text-xs sm:text-sm md:text-base">
               <li className="flex items-start gap-2">
-                <span className="flex-shrink-0">📍</span>
+                <MapPin className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 <span>123 Main Street, City</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="flex-shrink-0">📞</span>
+                <Phone className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 <span>(555) 123-4567</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="flex-shrink-0">✉️</span>
+                <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 <span>hello@crunchybite.com</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="flex-shrink-0">🕐</span>
+                <Clock className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 <span>Open Daily 11AM - 11PM</span>
               </li>
             </ul>
@@ -162,9 +170,18 @@ export default function Footer() {
           {/* Payment Methods */}
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 pt-4 md:pt-6 border-t border-gray-800">
             <span className="text-gray-400 text-xs sm:text-sm">We accept:</span>
-            <span className="text-sm sm:text-base">💳</span>
-            <span className="text-sm sm:text-base">🏦</span>
-            <span className="text-sm sm:text-base">📱</span>
+            <span className="inline-flex items-center gap-1 text-sm sm:text-base">
+              <CreditCard className="w-4 h-4" aria-hidden="true" />
+              Cards
+            </span>
+            <span className="inline-flex items-center gap-1 text-sm sm:text-base">
+              <Landmark className="w-4 h-4" aria-hidden="true" />
+              Bank Transfer
+            </span>
+            <span className="inline-flex items-center gap-1 text-sm sm:text-base">
+              <Smartphone className="w-4 h-4" aria-hidden="true" />
+              Mobile Pay
+            </span>
           </div>
         </div>
       </div>
