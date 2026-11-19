@@ -64,7 +64,7 @@ export default function RootLayout({ children }) {
       <body>
         <CartProvider>
           <Navbar />
-          <main className="pt-14 sm:pt-16">{children}</main>
+          <main className="pt-[57px] sm:pt-[65px]">{children}</main>
           <Footer />
         </CartProvider>
       </body>

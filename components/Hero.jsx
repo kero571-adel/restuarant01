@@ -49,7 +49,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[calc(100svh-57px)] sm:min-h-[calc(100svh-65px)] mt-[57px] sm:mt-[65px] overflow-hidden bg-black flex items-center justify-center px-4">
+    <section className="relative w-full min-h-[calc(100svh-57px)] sm:min-h-[calc(100svh-65px)] overflow-hidden bg-black flex items-center justify-center px-4">
       {/* الفيديو: من غير poster ومن غير تأخير */}
       <div
         className="absolute inset-0"
