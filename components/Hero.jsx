@@ -3,8 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 
-const VIDEO_DESKTOP =
-  "/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4";
+const VIDEO_DESKTOP = "/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4";
 const VIDEO_MOBILE = "/hero/Fried_chicken_burger_being_prepared_a8304639e8.mp4";
 
 // الفيديو بيتكتب في الـ HTML نفسه (SSR)، فالمتصفح يبدأ تحميله وتشغيله
