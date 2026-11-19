@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import Link from "next/link";
 
-const VIDEO_DESKTOP = "/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4";
+const VIDEO_DESKTOP =
+  "/hero/Fried_chicken_burger_being_prepared_79f7d3c9b5.mp4";
 const VIDEO_MOBILE = "/hero/Fried_chicken_burger_being_prepared_a8304639e8.mp4";
 
 // الفيديو بيتكتب في الـ HTML نفسه (SSR)، فالمتصفح يبدأ تحميله وتشغيله
@@ -49,7 +50,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[100svh] overflow-hidden bg-black flex items-center justify-center px-4">
+    <section className="relative w-full min-h-[calc(100svh-57px)] sm:min-h-[calc(100svh-65px)] mt-[57px] sm:mt-[65px] overflow-hidden bg-black flex items-center justify-center px-4">
       {/* الفيديو: من غير poster ومن غير تأخير */}
       <div
         className="absolute inset-0"
